@@ -8,3 +8,7 @@ Configuration and files V2
 ### Display SSD1306 raspberry 
 
 [Link para funcionamiento del Display](https://learn.adafruit.com/monochrome-oled-breakouts/python-usage-2)
+
+## Serial Comunication
+
+[Comunicación Serial](https://www.electronicwings.com/raspberry-pi/raspberry-pi-uart-communication-using-python-and-c)
