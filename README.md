@@ -12,3 +12,6 @@ Configuration and files V2
 ## Serial Comunication
 
 [Comunicación Serial](https://www.electronicwings.com/raspberry-pi/raspberry-pi-uart-communication-using-python-and-c)
+
+## Raspberry pi Camera
+[Raspberri Camera tutorial](https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/2)
