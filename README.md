@@ -15,3 +15,4 @@ Configuration and files V2
 
 ## Raspberry pi Camera
 [Raspberri Camera tutorial](https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/2)
+[Upload and Download Image Firebase](https://www.youtube.com/watch?v=I1eskLk0exg)
