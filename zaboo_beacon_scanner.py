@@ -148,7 +148,7 @@ while True:
             print('son iguales no se guarda')
         else:
             current_time=round(time.time())
-            Save_bb_change('Zaboo123',current_devices_names_list,current_rssi_list,current_time)
+            Save_bb_change(client_device,current_devices_names_list,current_rssi_list,current_time)
 
         previous_devices_names_list=current_devices_names_list
 
