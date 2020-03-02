@@ -60,6 +60,7 @@ user = "dover"                    #Connection username
 password = "1020785214"            #Connection password
 client_device = conf.zaboo_config['id']
 
+mqttc = mqtt.Client(client_device)
 mqttc.on_connect = on_connect
 mqttc.on_message=on_message
 mqttc.on_log=on_log 
@@ -98,7 +99,7 @@ current_rssi_list=[]
 
 #Conectar Cliente con el id que pertenece a Zaboo
 # Este es el cliente MQTT
-mqttc = mqtt.Client(client_device)
+
 mqttc.username_pw_set(user, password)
 mqttc.connect(broker_address, port)
 mqttc.loop_start()
