@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 import time
-import zaboo_config as conf 
+import zaboo_beacon_config as conf 
 
 
 def on_connect(client, userdata, flags, rc):
