@@ -41,9 +41,9 @@ def on_message(client, userdata, message):
     payload=message.payload.decode("utf8")
     print(payload)
     try:
-        ser.write(payload.encode())
-    except Exception as e:
-        raise
+        ser.write(message.payload)
+    except :
+        print('not posible to write in serial port')
 
 
 def on_publish(client, obj, mid):
