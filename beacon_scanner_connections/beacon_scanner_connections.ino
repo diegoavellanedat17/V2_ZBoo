@@ -10,12 +10,13 @@
 
 int scanTime = 5; //In seconds
 BLEScan* pBLEScan;
-
+uint8_t state=0;
 String Names[10];
-int Device_RSSI[10];
 
+int Device_RSSI[10];
+// index del arreglo spara nombres y RSSI 
 uint8_t scan_position=0;
-uint8_t scan_position_devices=0;
+
 
 static BLEAdvertisedDevice* myDevice;
 
@@ -28,6 +29,7 @@ static boolean searching_flag=false;
 uint8_t found_device=0;
 // Para conectarse con los beacons 
 String incomming_String;
+String led_status="";
 class MyClientCallback : public BLEClientCallbacks{
   // funcion para conectarse 
   void onConnect(BLEClient* pclient){
@@ -103,66 +105,93 @@ void setup() {
    for (int i=0; i< (sizeof(Names)/sizeof(Names[0]));i++){
     Names[i]="";
   }
-
-//   for (int i=0; i< (sizeof(NamesForCon)/sizeof(NamesForCon[0]));i++){
-//    NamesForCon[i]="";
-//  }
-//   for (int i=0; i< (sizeof(myDeviceForCon)/sizeof(myDeviceForCon[0]));i++){
-//    myDeviceForCon[i]=0;
-//  }
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+
+ if(state==0){
+  Serial.println("Estado 0 ");
+    while(Serial.available()){
+      delay(3);
+      char c = Serial.read();
+      incomming_String += c;
+    }
+    delay(10);
+    Serial.println(incomming_String);
+    if (strncmp (incomming_String.c_str(),"START",5) == 0){
+      Serial.println("Cambiando a estado 1");
+      state=1;
+      incomming_String="";
+    }
+    else{
+      incomming_String="";
+    }
+    
+    
+    
+ }
+
+ if(state==1){
   BLEScanResults foundDevices = pBLEScan->start(scanTime, false);
   PrintJSON();
-// Si Alguien está buscando beacons
- if(searching_flag==true){
+  // Si Alguien está buscando beacons
+  if(searching_flag==true){
       if(found_device==0){
         Serial.println("No se encontro el Dispositivo");
         incomming_String="";
       }
       searching_flag=false;
-  }
+   }
   
-  pBLEScan->clearResults();   // delete results fromBLEScan buffer to release memory
-  scan_position=0;
-  scan_position_devices=0;
-  // Limpiar los dos Array 
-  for (int i=0; i< (sizeof(Device_RSSI)/sizeof(Device_RSSI[0]));i++){
-    Device_RSSI[i]=0;
-  }
-   for (int i=0; i< (sizeof(Names)/sizeof(Names[0]));i++){
-    Names[i]="";
-  }
+    pBLEScan->clearResults();   // delete results fromBLEScan buffer to release memory
+    scan_position=0;
 
-// Cuando llegue un mensaje del broer queriendose conectar a algun BEACON 
-while(Serial.available()){
-  delay(3);
-  char c = Serial.read();
-  incomming_String += c;
-}
-  incomming_String.trim();
-  if(incomming_String.length() >0){
-    //Verificar si tengo guardado el nombre del dispositivo en el array
-    searching_flag=true;
-    Serial.println(incomming_String);
-  }
-
-  if (doConnect == true) {
-    if (connectToServer()) {
-      Serial.println("We are now connected to the BLE Server.");
-    } else {
-      Serial.println("We have failed to connect to the server; there is nothin more we will do.");
+    // Limpiar los dos Array 
+    for (int i=0; i< (sizeof(Device_RSSI)/sizeof(Device_RSSI[0]));i++){
+      Device_RSSI[i]=0;
     }
-    doConnect = false;
-    found_device=0;
-  }
+    for (int i=0; i< (sizeof(Names)/sizeof(Names[0]));i++){
+      Names[i]="";
+    }
+
+    // Cuando llegue un mensaje del broker queriendose conectar a algun BEACON 
+    while(Serial.available()){
+      delay(3);
+      char c = Serial.read();
+      incomming_String += c;
+    }
+     incomming_String.trim();
+    if(incomming_String.length() >0){
+         if(incomming_String[0]!='Z'){
+        led_status=incomming_String;
+        incomming_String="";
+      }
+     else{
+      searching_flag=true;
+     }
+      
+      Serial.println(incomming_String);
+    }
+
+    if (doConnect == true) {
+      if (connectToServer()) {
+      Serial.println("We are now connected to the BLE Server.");
+     } else {
+      Serial.println("We have failed to connect to the server; there is nothin more we will do.");
+      }
+      doConnect = false;
+      found_device=0;
+    }
+
+    if(led_status!=""){
+      Serial.print("Orden cambio de color");
+      Serial.println(led_status);
+      led_status="";
+    }
+ }
+    delay(100);
+    //Serial.println(ESP.getFreeHeap());
  
-  delay(100);
-  Serial.println(ESP.getFreeHeap());
-
-
 }
 
 void PrintJSON(){
