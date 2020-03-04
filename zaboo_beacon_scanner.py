@@ -114,11 +114,14 @@ while True:
     data_left = ser.inWaiting()             #check for remaining byte
     received_data += ser.read(data_left)
     #Datos recividos
-    received_data=received_data.decode('utf8')   
-    print (received_data[:-2])
+    try:
+        received_data=received_data.decode('utf8')
+        if received_data[:2]=='S0'
+            print('Initial STATE')
+            ser.write(b'START')
+    except:
+        print('No es posible decodificar esta trama')
 
-    if received_data == 'S0':
-        print('Current_state 0')
 
     try:
         #Limpiar el display
