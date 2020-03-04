@@ -113,6 +113,12 @@ while True:
     sleep(0.03)
     data_left = ser.inWaiting()             #check for remaining byte
     received_data += ser.read(data_left)
+    #Datos recividos
+    received_data=received_data.decode('utf8')   
+    print (received_data)
+    
+    if received_data == 'Estado 0':
+        print('Current_state 0')
 
     try:
         #Limpiar el display
@@ -121,9 +127,7 @@ while True:
         image = Image.new('1', (oled.width, oled.height))
         draw = ImageDraw.Draw(image)
 
-        #Datos recividos
-        received_data=received_data.decode('utf8')   
-        print (received_data)
+
         #Convertir datos a JSON
         json_data_incoming=json.loads(received_data)
         # Imprimir datos 
