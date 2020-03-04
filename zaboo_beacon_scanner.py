@@ -116,7 +116,7 @@ while True:
     #Datos recividos
     try:
         received_data=received_data.decode('utf8')
-        if received_data[:2]=='S0'
+        if received_data[:2]=='S0':
             print('Initial STATE')
             ser.write(b'START')
     except:
