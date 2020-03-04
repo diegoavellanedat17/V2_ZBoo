@@ -129,11 +129,10 @@ while True:
         oled.show()
         image = Image.new('1', (oled.width, oled.height))
         draw = ImageDraw.Draw(image)
-
-
         #Convertir datos a JSON
         json_data_incoming=json.loads(received_data)
         # Imprimir datos 
+        print(json_data_incoming)
         nombre=json_data_incoming['devices'][0]['name']
         json_size=len(json_data_incoming['devices'])
         draw.text((0,0),nombre,font=font_aux, fill=255)
@@ -152,8 +151,9 @@ while True:
 
 
         if collections.Counter(current_devices_names_list)==collections.Counter(previous_devices_names_list):
-            print('son iguales no se guarda')
+            print('Not changes')
         else:
+            print('Devices_changes')
             current_time=round(time.time())
             Save_bb_change(client_device,current_devices_names_list,current_rssi_list,current_time)
 
