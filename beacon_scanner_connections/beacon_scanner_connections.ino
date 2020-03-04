@@ -110,7 +110,7 @@ void setup() {
 void loop() {
 
  if(state==0){
-  Serial.println("Estado 0 ");
+  Serial.println("S0");
     while(Serial.available()){
       delay(3);
       char c = Serial.read();
@@ -119,7 +119,6 @@ void loop() {
     delay(10);
     Serial.println(incomming_String);
     if (strncmp (incomming_String.c_str(),"START",5) == 0){
-      Serial.println("Cambiando a estado 1");
       state=1;
       incomming_String="";
     }
@@ -190,7 +189,7 @@ void loop() {
     }
  }
     delay(100);
-    //Serial.println(ESP.getFreeHeap());
+    //
  
 }
 
