@@ -116,8 +116,8 @@ while True:
     #Datos recividos
     received_data=received_data.decode('utf8')   
     print (received_data)
-    
-    if received_data == 'Estado 0':
+
+    if received_data[:-1] == 'Estado 0':
         print('Current_state 0')
 
     try:
