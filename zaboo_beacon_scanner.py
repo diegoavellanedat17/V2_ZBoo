@@ -38,6 +38,13 @@ def on_message(client, userdata, message):
     print("message topic=",message.topic)
     print("message qos=",message.qos)
     print("message retain flag=",message.retain)
+    payload=message.payload.decode("utf8")
+    print(payload)
+    try:
+        ser.write(payload.encode())
+    except Exception as e:
+        raise
+
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
