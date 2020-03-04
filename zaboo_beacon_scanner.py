@@ -115,7 +115,7 @@ while True:
     received_data += ser.read(data_left)
     #Datos recividos
     received_data=received_data.decode('utf8')   
-    print (received_data[:-3])
+    print (received_data[:-5])
 
     if received_data == 'Estado 0':
         print('Current_state 0')
