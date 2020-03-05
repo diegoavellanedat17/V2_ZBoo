@@ -20,5 +20,5 @@ Configuration and files V2
 ## Beacon Scanner 
 En ocasiones cuando se quiere conectar a un BEACON en calidad de cliente, se queda un tiempo muy largo esperando y est ohace que no siga escaneando por lo tanto en la libreria en el archivo FreeRTOS.cpp se cambia la linea 68 por 
 ```
-xSemaphoreRake(m_semaphore,15000) // anteriormente no era 15000 sino un valor que daba alrededor de 50 días
+xSemaphoreTake(m_semaphore,15000) // anteriormente no era 15000 sino un valor que daba alrededor de 50 días
 ```
