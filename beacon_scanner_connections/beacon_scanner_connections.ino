@@ -19,6 +19,7 @@ uint8_t scan_position=0;
 
 
 static BLEAdvertisedDevice* myDevice;
+static BLEClient*  pClient;
 
 //variables para conexion 
 static boolean doConnect= false;
@@ -30,6 +31,8 @@ uint8_t found_device=0;
 // Para conectarse con los beacons 
 String incomming_String;
 String led_status="";
+
+
 class MyClientCallback : public BLEClientCallbacks{
   // funcion para conectarse 
   void onConnect(BLEClient* pclient){
@@ -38,6 +41,8 @@ class MyClientCallback : public BLEClientCallbacks{
   //funcion para desconectarse 
   void onDisconnect(BLEClient* pclient){
     connected = false;
+     delete myDevice;
+    delete pclient; //crash
     Serial.println("disconected");
   }
 };
@@ -45,16 +50,26 @@ class MyClientCallback : public BLEClientCallbacks{
 bool connectToServer() {
     Serial.print("Forming a connection to ");
     Serial.println(myDevice->getAddress().toString().c_str());
-    
-    BLEClient*  pClient  = BLEDevice::createClient();
+    //if(pClient!=nullptr){
+    //  delete(pClient);
+    //}
+    pClient  = BLEDevice::createClient();
     Serial.println(" - Created client");
-
-    pClient->setClientCallbacks(new MyClientCallback());
+    
+    pClient->setClientCallbacks(new MyClientCallback(), true); // optional pa
 
     // Connect to the remove BLE Server.
-    pClient->connect(myDevice);  // if you pass BLEAdvertisedDevice instead of address, it will be recognized type of peer device address (public or private)
+    bool _connected = pClient->connect(myDevice);  // if you pass BLEAdvertisedDevice instead of address, it will be recognized type of peer device address (public or private)
+    if(!_connected){
+      delete pClient;
+      delete myDevice;
+      return false;
+    }
     Serial.println(" - Connected to server");
 
+    //delay(4000);
+    //pClient->disconnect();
+    //Serial.println("desconectar");
     connected = true;
 }
 
@@ -189,7 +204,7 @@ void loop() {
     }
  }
     delay(100);
-    //
+    Serial.println(ESP.getFreeHeap());
  
 }
 
