@@ -12,6 +12,31 @@ import collections
 import firebase_admin   
 from firebase_admin import db
 from firebase_admin import credentials,firestore
+import pyrebase
+
+#Import Firebase config for photos
+config={
+
+    "apiKey": "AIzaSyDNUbWOOFxuR-1fNYJujWir2xRQU5QF8gg",
+    "authDomain": "bloggeekplatzi1.firebaseapp.com",
+    "databaseURL": "https://bloggeekplatzi1.firebaseio.com",
+    "projectId": "bloggeekplatzi1",
+    "storageBucket": "bloggeekplatzi1.appspot.com",
+    "messagingSenderId": "763115962574",
+    "appId": "1:763115962574:web:287110d9b1615d1c9a509f",
+    "measurementId": "G-ZMPBZ14S63"    
+}
+
+def captureAndSend(nameImage,device_id):
+    camera=PiCamera()
+    path_on_cloud=device_id+'/'+nameImage
+    path_local='/home/pi/Desktop/heyZaboo/'+nameImage
+    camera.start_preview()
+    sleep(2)
+    camera.capture(path_local)
+    camera.stop_preview()
+    camera.close()
+    storage.child(path_on_cloud).put(path_local)
 
 
 
@@ -50,6 +75,7 @@ def on_message(client, userdata, message):
         # responder que el mensaje fue recibido
         mqttc.publish("ZABOO_CLOUD","{\"device\":\""+str(conf.zaboo_config['id'])+"\",\"type\":\"conf\",\"filename\":\""+photo_filename+"\"}")
         print('take Picture')
+        captureAndSend(photo_filename,str(conf.zaboo_config['id']))
     elif topic==str(conf.zaboo_config['id'])+"/beacon":   
         try:
             ser.write(message.payload)
@@ -84,6 +110,10 @@ mqttc.on_message=on_message
 mqttc.on_log=on_log 
 mqttc.on_publish = on_publish
 mqttc.on_subscribe = on_subscribe
+
+#pyrebase for photos
+firebase = pyrebase.initialize_app(config)
+storage=firebase.storage()
 
 # Define the Reset Pin
 #oled_reset = digitalio.DigitalInOut(board.D4)
