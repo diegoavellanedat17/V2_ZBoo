@@ -41,8 +41,11 @@ def on_message(client, userdata, message):
     print("message qos=",message.qos)
     print("message retain flag=",message.retain)
     payload=message.payload.decode("utf8")
-    print(type(message.topic))
-    print(payload)
+    topic=message.topic
+    #print(payload)
+
+    if topic==str(conf.zaboo_config['id'])+"/photo":
+        print('take Picture')
     #try:
     #    ser.write(message.payload)
     #except :
