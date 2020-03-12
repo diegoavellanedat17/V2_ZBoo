@@ -48,7 +48,7 @@ def on_message(client, userdata, message):
         #en el payload viene el nombre que se debe poner al archivo
         photo_filename = payload 
         # responder que el mensaje fue recibido
-        mqttc.publish(ZABOO_CLOUD,"{\"device\":\""+str(conf.zaboo_config['id'])+"\",\"type\":\"conf\",\"filename\":\""+photo_filename+"\"}")
+        mqttc.publish("ZABOO_CLOUD","{\"device\":\""+str(conf.zaboo_config['id'])+"\",\"type\":\"conf\",\"filename\":\""+photo_filename+"\"}")
         print('take Picture')
     elif topic==str(conf.zaboo_config['id'])+"/beacon":   
         try:
