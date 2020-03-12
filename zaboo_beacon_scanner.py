@@ -30,6 +30,7 @@ def on_connect(client, userdata, flags, rc):
     suscription2=str(conf.zaboo_config['id'])+"/photo"
     print(suscription1)
     client.subscribe(suscription1)
+    client.subscribe(suscription2)
 
 def on_log(client, userdata, level, buf):
     print("log: ",buf)
