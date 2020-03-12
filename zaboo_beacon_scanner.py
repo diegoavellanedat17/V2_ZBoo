@@ -46,10 +46,11 @@ def on_message(client, userdata, message):
 
     if topic==str(conf.zaboo_config['id'])+"/photo":
         print('take Picture')
-    #try:
-    #    ser.write(message.payload)
-    #except :
-    #    print('not posible to write in serial port')
+    elif topic==str(conf.zaboo_config['id'])+"/beacon":   
+        try:
+            ser.write(message.payload)
+        except :
+            print('not posible to write in serial port')
 
 
 def on_publish(client, obj, mid):
