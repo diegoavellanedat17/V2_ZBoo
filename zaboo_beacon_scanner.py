@@ -26,9 +26,10 @@ def Save_bb_change(device_id,devices,rssi,hora):
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code" + str(rc))
-    suscription=str(conf.zaboo_config['id'])+"/beacon"
-    print(suscription)
-    client.subscribe(suscription)
+    suscription1=str(conf.zaboo_config['id'])+"/beacon"
+    suscription2=str(conf.zaboo_config['id'])+"/photo"
+    print(suscription1)
+    client.subscribe(suscription1)
 
 def on_log(client, userdata, level, buf):
     print("log: ",buf)
@@ -39,11 +40,12 @@ def on_message(client, userdata, message):
     print("message qos=",message.qos)
     print("message retain flag=",message.retain)
     payload=message.payload.decode("utf8")
+    print(type(message.topic))
     print(payload)
-    try:
-        ser.write(message.payload)
-    except :
-        print('not posible to write in serial port')
+    #try:
+    #    ser.write(message.payload)
+    #except :
+    #    print('not posible to write in serial port')
 
 
 def on_publish(client, obj, mid):
