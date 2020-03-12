@@ -78,7 +78,7 @@ def on_message(client, userdata, message):
         mqttc.publish("ZABOO_CLOUD","{\"device\":\""+str(conf.zaboo_config['id'])+"\",\"type\":\"conf\",\"filename\":\""+photo_filename+"\"}")
         print('take Picture')
         captureAndSend(photo_filename,str(conf.zaboo_config['id']))
-         mqttc.publish("ZABOO_CLOUD","{\"device\":\""+str(conf.zaboo_config['id'])+"\",\"type\":\"upload\",\"filename\":\""+photo_filename+"\"}")
+        mqttc.publish("ZABOO_CLOUD","{\"device\":\""+str(conf.zaboo_config['id'])+"\",\"type\":\"upload\",\"filename\":\""+photo_filename+"\"}")
     elif topic==str(conf.zaboo_config['id'])+"/beacon":   
         try:
             ser.write(message.payload)
