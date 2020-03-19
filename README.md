@@ -22,3 +22,5 @@ En ocasiones cuando se quiere conectar a un BEACON en calidad de cliente, se que
 ```
 xSemaphoreTake(m_semaphore,15000) // anteriormente no era 15000 sino un valor que daba alrededor de 50 días
 ```
+## Portal Zabooers 
+Para ver las imagenes en el sitio web, seguir el siguiente link [cors.json](https://firebase.google.com/docs/storage/web/download-files)
