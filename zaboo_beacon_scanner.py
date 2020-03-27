@@ -157,7 +157,7 @@ mqttc.loop_start()
 #mqttc.publish("house/bulbs/bulb1","ON")
 
 ser = serial.Serial ("/dev/ttyS0", 115200)    #Open port with baud rate
-font_aux=ImageFont.truetype('/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Light.ttf',10)
+font_aux=ImageFont.truetype('/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Light.ttf',25)
 while True:
 
     received_data = ser.read()              #read serial port
@@ -190,8 +190,8 @@ while True:
         except:
             nombre= 'No hay dispositivos'
         json_size=len(json_data_incoming['devices'])
-        draw.text((0,0),nombre,font=font_aux, fill=255)
-        draw.text((0,20),str(json_size),font=font_aux, fill=255)
+        draw.text((00,0),nombre,font=font_aux, fill=255)
+        draw.text((10,30),str(json_size),font=font_aux, fill=255)
         oled.image(image)
         oled.show()
         #sacar la lista de los devices actuales
