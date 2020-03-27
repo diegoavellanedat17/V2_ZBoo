@@ -184,7 +184,11 @@ while True:
         json_data_incoming=json.loads(received_data)
         # Imprimir datos 
         print(json_data_incoming)
-        nombre=json_data_incoming['devices'][0]['name']
+        try:
+
+            nombre=json_data_incoming['devices'][0]['name']
+        except:
+            nombre= 'No hay dispositivos'
         json_size=len(json_data_incoming['devices'])
         draw.text((0,0),nombre,font=font_aux, fill=255)
         draw.text((0,20),str(json_size),font=font_aux, fill=255)
