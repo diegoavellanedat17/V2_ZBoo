@@ -191,17 +191,18 @@ while True:
             for i in range(json_size):
                 nombres.append(json_data_incoming['devices'][i]['name'])
         except:
-            nombre= 'No hay dispositivos'
+            nombre= 'No devices'
+            draw.text((0,0),nombre,font=font, fill=255)
 
         for i in range(len(nombres)):
             if i== 0 or i== 2 or i== 4: 
-                draw.text((0,i*10),nombres[i],font=font_aux, fill=255)
+                draw.text((0,i*10),nombres[i],font=font, fill=255)
             elif i== 1 or i== 3 or i== 5: 
-                draw.text((60,i*10),nombres[i],font=font_aux, fill=255)
+                draw.text((60,i*10),nombres[i],font=font, fill=255)
             else: 
                 pass
 
-        draw.text((120,47),str(json_size),font=font_aux, fill=255)
+        draw.text((120,47),str(json_size),font=font, fill=255)
         oled.image(image)
         oled.show()
         #sacar la lista de los devices actuales
