@@ -157,9 +157,10 @@ mqttc.loop_start()
 #mqttc.publish("house/bulbs/bulb1","ON")
 
 ser = serial.Serial ("/dev/ttyS0", 115200)    #Open port with baud rate
-font_aux=ImageFont.truetype('/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Light.ttf',25)
-while True:
+font= ImageFont.truetype('/usr/share/fonts/truetype/piboto/Piboto-Bold.ttf',20)
 
+while True:
+    nombres=[]
     received_data = ser.read()              #read serial port
     sleep(0.03)
     data_left = ser.inWaiting()             #check for remaining byte
@@ -182,16 +183,25 @@ while True:
         draw = ImageDraw.Draw(image)
         #Convertir datos a JSON
         json_data_incoming=json.loads(received_data)
-        # Imprimir datos 
-        print(json_data_incoming)
-        try:
+        json_size=len(json_data_incoming['devices'])
 
-            nombre=json_data_incoming['devices'][0]['name']
+        print(json_data_incoming)
+
+        try:
+            for i in range json_size:
+                nombres.append(json_data_incoming['devices'][i]['name'])
         except:
             nombre= 'No hay dispositivos'
-        json_size=len(json_data_incoming['devices'])
-        draw.text((00,0),nombre,font=font_aux, fill=255)
-        draw.text((10,30),str(json_size),font=font_aux, fill=255)
+
+        for i in range len(nombres):
+            if i== 0 or i== 2 or i== 4: 
+                draw.text((0,i*10),nombres[i],font=font_aux, fill=255)
+            else if i== 1 or i== 3 or i== 5: 
+                draw.text((60,i*10),nombres[i],font=font_aux, fill=255)
+            else: 
+                pass
+
+        draw.text((120,47),str(json_size),font=font_aux, fill=255)
         oled.image(image)
         oled.show()
         #sacar la lista de los devices actuales
