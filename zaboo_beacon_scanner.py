@@ -192,7 +192,7 @@ while True:
             for i in range(json_size):
                 name_to_save=json_data_incoming['devices'][i]['name']
                 name_to_save=name_to_save.split()
-                name_to_save=name_to_save[0]
+                name_to_save=name_to_save[0][0:4]
                 nombres.append(name_to_save)
         except:
             nombre= 'No devices'
