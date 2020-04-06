@@ -196,7 +196,7 @@ while True:
         for i in range(len(nombres)):
             if i== 0 or i== 2 or i== 4: 
                 draw.text((0,i*10),nombres[i],font=font_aux, fill=255)
-            else if i== 1 or i== 3 or i== 5: 
+            elif i== 1 or i== 3 or i== 5: 
                 draw.text((60,i*10),nombres[i],font=font_aux, fill=255)
             else: 
                 pass
