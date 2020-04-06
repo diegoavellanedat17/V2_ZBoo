@@ -158,6 +158,7 @@ mqttc.loop_start()
 
 ser = serial.Serial ("/dev/ttyS0", 115200)    #Open port with baud rate
 font= ImageFont.truetype('/usr/share/fonts/truetype/piboto/Piboto-Bold.ttf',20)
+font_small= ImageFont.truetype('/usr/share/fonts/truetype/piboto/Piboto-Bold.ttf',14)
 
 while True:
     nombres=[]
@@ -189,7 +190,10 @@ while True:
 
         try:
             for i in range(json_size):
-                nombres.append(json_data_incoming['devices'][i]['name'])
+                name_to_save=json_data_incoming['devices'][i]['name']
+                name_to_save=name_to_save.split()
+                name_to_save=name_to_save[0]
+                nombres.append(name_to_save)
         except:
             nombre= 'No devices'
             draw.text((0,0),nombre,font=font, fill=255)
@@ -198,11 +202,11 @@ while True:
             if i== 0 or i== 2 or i== 4: 
                 draw.text((0,i*10),nombres[i],font=font, fill=255)
             elif i== 1 or i== 3 or i== 5: 
-                draw.text((60,i*10),nombres[i],font=font, fill=255)
+                draw.text((60,(i-1)*10),nombres[i],font=font, fill=255)
             else: 
                 pass
 
-        draw.text((120,47),str(json_size),font=font, fill=255)
+        draw.text((120,47),str(json_size),font=font_small, fill=255)
         oled.image(image)
         oled.show()
         #sacar la lista de los devices actuales
