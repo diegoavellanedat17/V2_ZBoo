@@ -148,17 +148,28 @@ previous_devices_names_list= []
 current_rssi_list=[]
 
 
+
+ser = serial.Serial ("/dev/ttyS0", 115200)    #Open port with baud rate
+font= ImageFont.truetype('/usr/share/fonts/truetype/piboto/Piboto-Bold.ttf',20)
+font_small= ImageFont.truetype('/usr/share/fonts/truetype/piboto/Piboto-Bold.ttf',14)
+sub_title='ZABOO'
+title='POLLY'
+title_font= ImageFont.truetype('/usr/share/fonts/truetype/piboto/Piboto-Bold.ttf',26)
+
+(font_width, font_height) = title_font.getsize(text)
+draw.text((0,0),title,font=sub_title, fill=255) 
+draw.text((oled.width//2 - font_width//2, oled.height//2 - font_height//2),title,font=title_font, fill=255) 
+oled.image(image)
+oled.show()
 #Conectar Cliente con el id que pertenece a Zaboo
 # Este es el cliente MQTT
+
 
 mqttc.username_pw_set(user, password)
 mqttc.connect(broker_address, port)
 mqttc.loop_start()
 #mqttc.publish("house/bulbs/bulb1","ON")
 
-ser = serial.Serial ("/dev/ttyS0", 115200)    #Open port with baud rate
-font= ImageFont.truetype('/usr/share/fonts/truetype/piboto/Piboto-Bold.ttf',20)
-font_small= ImageFont.truetype('/usr/share/fonts/truetype/piboto/Piboto-Bold.ttf',14)
 
 while True:
     nombres=[]
