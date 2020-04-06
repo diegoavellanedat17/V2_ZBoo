@@ -188,12 +188,12 @@ while True:
         print(json_data_incoming)
 
         try:
-            for i in range json_size:
+            for i in range(json_size):
                 nombres.append(json_data_incoming['devices'][i]['name'])
         except:
             nombre= 'No hay dispositivos'
 
-        for i in range len(nombres):
+        for i in range(len(nombres)):
             if i== 0 or i== 2 or i== 4: 
                 draw.text((0,i*10),nombres[i],font=font_aux, fill=255)
             else if i== 1 or i== 3 or i== 5: 
